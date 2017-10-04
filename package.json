@@ -1,0 +1,23 @@
+{
+  "name": "cityofhelsinkiproject",
+  "version": "1.0.0",
+  "description": "Innovation project for the City of Helsinki",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenkBourgonje/CityOfHelsinkiProject.git"
+  },
+  "author": "Henk Bourgonje",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HenkBourgonje/CityOfHelsinkiProject/issues"
+  },
+  "homepage": "https://github.com/HenkBourgonje/CityOfHelsinkiProject#readme",
+  "dependencies": {
+    "express": "^4.15.5",
+    "mongojs": "^2.4.1"
+  }
+}
