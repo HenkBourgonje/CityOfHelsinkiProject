@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/HenkBourgonje/CityOfHelsinkiProject#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.15.5",
     "mongojs": "^2.4.1"
   }
