@@ -2,9 +2,9 @@
   "name": "cityofhelsinkiproject",
   "version": "1.0.0",
   "description": "Innovation project for the City of Helsinki",
-  "main": "src/index.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.15.5",
+    "express-handlebars": "^3.0.0",
     "mongojs": "^2.4.1"
   }
 }
