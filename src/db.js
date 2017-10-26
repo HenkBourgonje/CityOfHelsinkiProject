@@ -1,6 +1,6 @@
-var mongojs = require('mongojs')
-var db = mongojs('localhost/CityOfHelsinki', ['people'])
+const mongojs = require('mongojs')
+const db = mongojs('localhost/CityOfHelsinki', ['people'])
 
-exports.get = function() {
-  return db
+exports.get = function () {
+    return db
 }

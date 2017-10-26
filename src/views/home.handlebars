@@ -1,1 +1,14 @@
-<h1>Example App: Home</h1>
+<h1>City of Helsinki Dashboard</h1>
+
+<table>
+{{# each dashboard_content }}
+    <tr>
+        <th>{{ this.first_name }} {{ this.last_name }}</th>
+        <th>{{ this.age }}</th>
+        <th>{{ this.date_of_birth }}</th>
+        <th>{{ this.application_date }}</th>
+        <th>{{ this.status }}</th>
+        <th><a href="/individual/{{this._id}}">Go to person</a></th>
+    </tr>
+{{/each }}
+</table>

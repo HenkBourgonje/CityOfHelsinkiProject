@@ -1,39 +1,41 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var app = express()
-var hbs  = require('express-handlebars')
-var path = require('path');
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+const hbs = require('express-handlebars')
+const path = require('path');
 
 // MongoDB Connection
-var mongo = require(path.resolve('src/db.js'))
-var db = mongo.get()
+const mongo = require(path.resolve('db.js'))
+const db = mongo.get()
 
-app.engine('handlebars', hbs({defaultLayout: 'main', layoutsDir: __dirname + '/views/layouts'}));
+app.engine('handlebars', hbs({defaultLayout: 'main', layoutsDir: __dirname + '/views/layouts'}))
 app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'handlebars');
+app.set('view engine', 'handlebars')
 
 // JSON bodyparser for every route
 app.use(bodyParser.json())
 
-//Init
+// Imports
+let functions = require('./functions.js')
+
+// Homepage route
 app.get('/', (req, res) => {
-  res.render('home')
+    functions.getDataFromDB(function (people) {
+        res.render('home', {dashboard_content: people})
+    })
+})
+
+// Individual document retrieval route
+app.get('/individual/:id', (req, res) => {
+    functions.findById(req.params.id, function (document) {
+        res.render('individual', {individual_content: document})
+    })
 })
 
 // Data submission route
 app.post('/submit', (req, res) => {
-  var childInfo = {
-    'name': req.body.name,
-    'gender': req.body.gender,
-    'age': req.body.age,
-    'status': req.body.status,
-    'application_date': req.body.application_date,
-    'start_date': req.body.start_date,
-    'address': req.body.address,
-    'kindergarten_choices': req.body.kindergarten_choices
-  }
-  db.people.insert(childInfo)
-  res.send("OK")
+    db.people.insert(req.body)
+    res.send("OK")
 })
 
 app.listen(3000, () => console.log('Running on port 3000...'))
