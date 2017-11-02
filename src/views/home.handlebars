@@ -1,14 +1,30 @@
-<h1>City of Helsinki Dashboard</h1>
+<h1>Applications to Daycare</h1>
 
-<table>
-{{# each dashboard_content }}
-    <tr>
-        <th>{{ this.first_name }} {{ this.last_name }}</th>
-        <th>{{ this.age }}</th>
-        <th>{{ this.date_of_birth }}</th>
-        <th>{{ this.application_date }}</th>
-        <th>{{ this.status }}</th>
-        <th><a href="/individual/{{this._id}}">Go to person</a></th>
-    </tr>
-{{/each }}
-</table>
+    <table id="all_applications">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Application date</th>
+                <th>Start date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{# each dashboard_content }}
+        <tr>
+            <td><a href="/individual/{{this._id}}">{{ this.first_name }} {{ this.last_name }}</a></td>
+            <td>{{ this.age }}</td>
+            <td>{{ this.application_date }}</td>
+            <td>{{ this.start_date }}</td>
+            <td>{{ this.status }}</td>
+        </tr>
+        {{/each }}
+        </tbody>
+    </table>
+
+<script>
+    $(function(){
+        $("#all_applications").dataTable();
+    })
+</script>

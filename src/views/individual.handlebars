@@ -1,40 +1,49 @@
-<h1>Applicant: {{individual_content.name}}</h1>
-<div id="basic_info">
-    <h3>Basic info:</h3>
-    <p>First name: {{individual_content.first_name}}</p>
-    <p>Last name: {{individual_content.last_name}}</p>
-    <p>Age: {{individual_content.age}}</p>
-    <p>Gender: {{individual_content.gender}}</p>
-    <p>ID code: {{individual_content._id}}</p>
-    <p>Daycare type: {{individual_content.daycare_type}}</p>
-    <p>Address: {{individual_content.address}}</p>
-    <p>Date of birth: {{individual_content.date_of_birth}}</p>
-    <p>Date of application: {{individual_content.application_date}}</p>
-    <p>Daycare start date: {{individual_content.start_date}}</p>
-    <p>Siblings: {{individual_content.siblings}}</p>
-    <h3>Special needs:</h3>
-    <p>Allergies: {{individual_content.allergies}}</p>
-    <p>Special needs: {{individual_content.special_needs}}</p>
+<h1>Applicant: {{individual_content.first_name}} {{individual_content.last_name}}</h1>
+<div class="row">
+    <div id="basic_info" class="one-half column">
+        <h4>Basic info:</h4>
+        <p>First name: {{individual_content.first_name}}</p>
+        <p>Last name: {{individual_content.last_name}}</p>
+        <p>Age: {{individual_content.age}}</p>
+        <p>Gender: {{individual_content.gender}}</p>
+        <p>ID code: {{individual_content._id}}</p>
+        <p>Daycare type: {{individual_content.daycare_type}}</p>
+        <p>Address: {{individual_content.address}}</p>
+        <p>Date of birth: {{individual_content.date_of_birth}}</p>
+        <p>Date of application: {{individual_content.application_date}}</p>
+        <p>Daycare start date: {{individual_content.start_date}}</p>
+        <p>Siblings: {{individual_content.siblings}}</p>
+        <h4>Special needs:</h4>
+        <p>Allergies: {{individual_content.allergies}}</p>
+        <p>Special needs: {{individual_content.special_needs}}</p>
+    </div>
+
+    <div id="map_view" class="one-half column">
+        <h4>Map view</h4>
+
+    </div>
 </div>
 
-<h3>Parents info:</h3>
+<h4>Parents info:</h4>
 
-<div id="parent_1">
-    <p>Parent 1 ID: {{individual_content.parent_1_id}}</p>
-    <p>First name: {{individual_content.parent_1_first_name}}</p>
-    <p>Last name: {{individual_content.parent_1_last_name}}</p>
-    <p>Address: {{individual_content.parent_1_address}}</p>
-    <p>Phone number: {{individual_content.parent_1_phone}}</p>
-    <p>E-mail address: {{individual_content.parent_1_email}}</p>
-    <p>Contact method: {{individual_content.parent_1_preferred_contact_method}}</p>
-</div>
+<div class="row">
+    <div id="parent_1" class="one-half column">
+        <p>Parent 1 ID: {{individual_content.parent_1_id}}</p>
+        <p>First name: {{individual_content.parent_1_first_name}}</p>
+        <p>Last name: {{individual_content.parent_1_last_name}}</p>
+        <p>Address: {{individual_content.parent_1_address}}</p>
+        <p>Phone number: {{individual_content.parent_1_phone}}</p>
+        <p>E-mail address: {{individual_content.parent_1_email}}</p>
+        <p>Contact method: {{individual_content.parent_1_preferred_contact_method}}</p>
+    </div>
 
-<div id="parent_2">
-    <p>Parent 2 ID: {{individual_content.parent_2_id}}</p>
-    <p>First name: {{individual_content.parent_2_first_name}}</p>
-    <p>Last name: {{individual_content.parent_2_last_name}}</p>
-    <p>Address: {{individual_content.parent_2_address}}</p>
-    <p>Phone number: {{individual_content.parent_2_phone}}</p>
-    <p>E-mail address: {{individual_content.parent_2_email}}</p>
-    <p>Contact method: {{individual_content.parent_2_preferred_contact_method}}</p>
+    <div id="parent_2" class="one-half column">
+        <p>Parent 2 ID: {{individual_content.parent_2_id}}</p>
+        <p>First name: {{individual_content.parent_2_first_name}}</p>
+        <p>Last name: {{individual_content.parent_2_last_name}}</p>
+        <p>Address: {{individual_content.parent_2_address}}</p>
+        <p>Phone number: {{individual_content.parent_2_phone}}</p>
+        <p>E-mail address: {{individual_content.parent_2_email}}</p>
+        <p>Contact method: {{individual_content.parent_2_preferred_contact_method}}</p>
+    </div>
 </div>
