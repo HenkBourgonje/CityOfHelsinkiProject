@@ -8,7 +8,7 @@
         <p>Gender: {{personal_info.gender}}</p>
         <p id="id_code">ID code: {{personal_info._id}}</p>
         <p>Daycare type: {{personal_info.daycare_type}}</p>
-        <p>Address: {{personal_info.address}}</p>
+        <p id="address_applicant">Address: {{personal_info.address}}</p>
         <p>Date of birth: {{personal_info.date_of_birth}}</p>
         <p>Date of application: {{personal_info.application_date}}</p>
         <p>Daycare start date: {{personal_info.start_date}}</p>
@@ -22,6 +22,8 @@
         <h4>Map view</h4>
         <div id="map"></div>
         <script>
+
+
             function initMap() {
                 let location_of_applicant = {lat: 60.16985569999999, lng: 24.93837910000002}
                 let map = new google.maps.Map(document.getElementById('map'), {
@@ -29,13 +31,16 @@
                     center: location_of_applicant
                 })
 
+
+                let id = document.querySelector('div#basic_info').querySelector('#id_code').innerHTML.slice(-24)
+
+
                 let addresses = ['Leppävaara', 'Helsinki', 'Vantaa','Espoo']
 
                 for (let x = 0; x < addresses.length; x++) {
                     $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
                         let p = data.results[0].geometry.location
                         let latlng = new google.maps.LatLng(p.lat, p.lng);
-//                        console.log(latlng)
                         new google.maps.Marker({
                             position: latlng,
                             map: map
@@ -44,8 +49,6 @@
                 }
             }
         </script>
-
-
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiPjAwMY-xCvqPvETNWQXFJTZrl6wDPvs&callback=initMap">
         </script>
@@ -79,8 +82,8 @@
 <div class="row">
     <div class="daycare_preferences">
         <h4>Daycare preferences:</h4>
-        <form name="daycare_selection_form" action="/application_submit/{{personal_info._id}}/{{personal_info.age}}" method="post">
-        <table>
+        <form name="daycare_selection_form" method="post" onsubmit="return redirect()">
+        <table id="daycare_table">
             <tr>
                 <th>Daycare name</th>
                 <th>Group capacity</th>
@@ -94,12 +97,21 @@
                     <td>{{ this.daycare_name }}</td>
                     <td>{{ this.places_left }}</td>
                     <td>{{ this.capacity }}</td>
-                    <td>{{ this.address }}</td>
+                    <td id="address_daycare">{{ this.address }}</td>
                     <td><input type="radio" name="daycare_prefrence" value={{ this._id }}></td>
                 </tr>
             {{/each}}
             </table>
-            <button type="submit" id="application_submit">Submit</button>
+            <button name="submit_choice" type="submit" id="application_submit">Submit</button>
+            <script>
+                function redirect() {
+                    let choice = document.querySelector('input[name="daycare_prefrence"]:checked').value
+                    let id = document.querySelector('div#basic_info').querySelector('#id_code').innerHTML.slice(-24)
+
+                    window.location.replace('/application_submit/'+ id + '/' + choice)
+                    return false
+                }
+            </script>
         </form>
     </div>
 </div>

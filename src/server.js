@@ -60,9 +60,13 @@ app.get('/individual/:id', (req, res) => {
     })
 })
 
-app.post('/application_submit/:child_id/:daycare_id', (req, res) => {
-    console.log('cool')
-    res.send('u')
+/**
+ * Route that gets called when a child is being submitted to a daycare
+ */
+// TODO See what the steps are after the submission of the child. It has to be edited in the DB, but what more, email sent to parents?.....
+app.get('/application_submit/:child_id/:daycare_id', (req, res) => {
+    functions.changeStatus(req.params.child_id, 'closed')
+    res.redirect('/')
 })
 
 /**

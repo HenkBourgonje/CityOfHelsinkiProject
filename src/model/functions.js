@@ -36,28 +36,19 @@ exports.getDaycares = function (id, callback) {
     })
 }
 
-//TODO THIS IS GONNA BE IN A ROUTE CALLED BY THE SUBMIT BUTTON
-// function daycare_pref_submitted() {
-//     // ID of the chosen daycare venue
-//     let choice = document.querySelector('input[name="daycare_prefrence"]:checked').value
-//
-//     // ID of the applicant that has chosen the daycare venue
-//     let id = document.querySelector('div#basic_info').querySelector('#id_code').innerHTML.slice(-24)
-//
-//     //TODO change/add choice to DB
-//
-//     //TODO change status
-//     changeStatus(id, "closed")
-// }
-//
-//
-// function changeStatus(id, status) {
-//     db.people.findAndModify({
-//         query: { '_id': mongojs.ObjectId(id) },
-//         update: { $set: { 'status': status }},
-//         new: true
-//     }, function (err, doc) {
-//
-//         return
-//     })
-// }
+/**
+ * Function that searches for the right child and changes the status of the application.
+ * @param id ID of the child
+ * @param status Status to which it should be changed.
+ */
+exports.changeStatus = function(id, status) {
+    db.people.findAndModify({
+        query: { '_id': mongojs.ObjectId(id) },
+        update: { $set: { 'status': status }},
+        new: true
+    }, function (err, doc) {
+        return
+    })
+}
+
+
