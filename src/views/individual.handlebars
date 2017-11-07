@@ -1,26 +1,54 @@
-<h1>Applicant: {{individual_content.first_name}} {{individual_content.last_name}}</h1>
+<h1>Applicant: {{personal_info.first_name}} {{personal_info.last_name}}</h1>
 <div class="row">
     <div id="basic_info" class="one-half column">
         <h4>Basic info:</h4>
-        <p>First name: {{individual_content.first_name}}</p>
-        <p>Last name: {{individual_content.last_name}}</p>
-        <p>Age: {{individual_content.age}}</p>
-        <p>Gender: {{individual_content.gender}}</p>
-        <p>ID code: {{individual_content._id}}</p>
-        <p>Daycare type: {{individual_content.daycare_type}}</p>
-        <p>Address: {{individual_content.address}}</p>
-        <p>Date of birth: {{individual_content.date_of_birth}}</p>
-        <p>Date of application: {{individual_content.application_date}}</p>
-        <p>Daycare start date: {{individual_content.start_date}}</p>
-        <p>Siblings: {{individual_content.siblings}}</p>
+        <p>First name: {{personal_info.first_name}}</p>
+        <p>Last name: {{personal_info.last_name}}</p>
+        <p>Age: {{personal_info.age}}</p>
+        <p>Gender: {{personal_info.gender}}</p>
+        <p id="id_code">ID code: {{personal_info._id}}</p>
+        <p>Daycare type: {{personal_info.daycare_type}}</p>
+        <p>Address: {{personal_info.address}}</p>
+        <p>Date of birth: {{personal_info.date_of_birth}}</p>
+        <p>Date of application: {{personal_info.application_date}}</p>
+        <p>Daycare start date: {{personal_info.start_date}}</p>
+        <p>Siblings: {{personal_info.siblings}}</p>
         <h4>Special needs:</h4>
-        <p>Allergies: {{individual_content.allergies}}</p>
-        <p>Special needs: {{individual_content.special_needs}}</p>
+        <p>Allergies: {{personal_info.allergies}}</p>
+        <p>Special needs: {{personal_info.special_needs}}</p>
     </div>
 
     <div id="map_view" class="one-half column">
         <h4>Map view</h4>
+        <div id="map"></div>
+        <script>
+            function initMap() {
+                let location_of_applicant = {lat: 60.16985569999999, lng: 24.93837910000002}
+                let map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 12,
+                    center: location_of_applicant
+                })
 
+                let addresses = ['Leppävaara', 'Helsinki', 'Vantaa','Espoo']
+
+                for (let x = 0; x < addresses.length; x++) {
+                    $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
+                        let p = data.results[0].geometry.location
+                        let latlng = new google.maps.LatLng(p.lat, p.lng);
+//                        console.log(latlng)
+                        new google.maps.Marker({
+                            position: latlng,
+                            map: map
+                        })
+                    })
+                }
+            }
+        </script>
+
+
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiPjAwMY-xCvqPvETNWQXFJTZrl6wDPvs&callback=initMap">
+        </script>
     </div>
 </div>
 
@@ -28,22 +56,50 @@
 
 <div class="row">
     <div id="parent_1" class="one-half column">
-        <p>Parent 1 ID: {{individual_content.parent_1_id}}</p>
-        <p>First name: {{individual_content.parent_1_first_name}}</p>
-        <p>Last name: {{individual_content.parent_1_last_name}}</p>
-        <p>Address: {{individual_content.parent_1_address}}</p>
-        <p>Phone number: {{individual_content.parent_1_phone}}</p>
-        <p>E-mail address: {{individual_content.parent_1_email}}</p>
-        <p>Contact method: {{individual_content.parent_1_preferred_contact_method}}</p>
+        <p>Parent 1 ID: {{personal_info.parent_1_id}}</p>
+        <p>First name: {{personal_info.parent_1_first_name}}</p>
+        <p>Last name: {{personal_info.parent_1_last_name}}</p>
+        <p>Address: {{personal_info.parent_1_address}}</p>
+        <p>Phone number: {{personal_info.parent_1_phone}}</p>
+        <p>E-mail address: {{personal_info.parent_1_email}}</p>
+        <p>Contact method: {{personal_info.parent_1_preferred_contact_method}}</p>
     </div>
 
     <div id="parent_2" class="one-half column">
-        <p>Parent 2 ID: {{individual_content.parent_2_id}}</p>
-        <p>First name: {{individual_content.parent_2_first_name}}</p>
-        <p>Last name: {{individual_content.parent_2_last_name}}</p>
-        <p>Address: {{individual_content.parent_2_address}}</p>
-        <p>Phone number: {{individual_content.parent_2_phone}}</p>
-        <p>E-mail address: {{individual_content.parent_2_email}}</p>
-        <p>Contact method: {{individual_content.parent_2_preferred_contact_method}}</p>
+        <p>Parent 2 ID: {{personal_info.parent_2_id}}</p>
+        <p>First name: {{personal_info.parent_2_first_name}}</p>
+        <p>Last name: {{personal_info.parent_2_last_name}}</p>
+        <p>Address: {{personal_info.parent_2_address}}</p>
+        <p>Phone number: {{personal_info.parent_2_phone}}</p>
+        <p>E-mail address: {{personal_info.parent_2_email}}</p>
+        <p>Contact method: {{personal_info.parent_2_preferred_contact_method}}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="daycare_preferences">
+        <h4>Daycare preferences:</h4>
+        <form name="daycare_selection_form" action="/application_submit/{{personal_info._id}}/{{personal_info.age}}" method="post">
+        <table>
+            <tr>
+                <th>Daycare name</th>
+                <th>Group capacity</th>
+                <th>Building capacity</th>
+                <th>Address</th>
+                <th>Selection</th>
+            </tr>
+
+            {{# each daycare_info }}
+                <tr>
+                    <td>{{ this.daycare_name }}</td>
+                    <td>{{ this.places_left }}</td>
+                    <td>{{ this.capacity }}</td>
+                    <td>{{ this.address }}</td>
+                    <td><input type="radio" name="daycare_prefrence" value={{ this._id }}></td>
+                </tr>
+            {{/each}}
+            </table>
+            <button type="submit" id="application_submit">Submit</button>
+        </form>
     </div>
 </div>
