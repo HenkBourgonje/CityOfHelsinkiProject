@@ -1,6 +1,6 @@
 <h1>Applicant: {{personal_info.first_name}} {{personal_info.last_name}}</h1>
 <div class="row">
-    <div id="basic_info" class="one-half column">
+    <div id="basic_info" class="col-xs-6">
         <h4>Basic info:</h4>
         <p>First name: {{personal_info.first_name}}</p>
         <p>Last name: {{personal_info.last_name}}</p>
@@ -18,11 +18,16 @@
         <p>Special needs: {{personal_info.special_needs}}</p>
     </div>
 
-    <div id="map_view" class="one-half column">
+    <div id="map_view" class="col-xs-6">
         <h4>Map view</h4>
         <div id="map"></div>
         <script>
+            let personal_address = document.querySelector('div#basic_info').querySelector('#address_applicant')
+            let daycare_address = document.querySelector('table#daycare_table').querySelector('#address_daycare')
 
+
+            console.log('P' + personal_address)
+            console.log('D' + daycare_address)
 
             function initMap() {
                 let location_of_applicant = {lat: 60.16985569999999, lng: 24.93837910000002}
@@ -58,7 +63,7 @@
 <h4>Parents info:</h4>
 
 <div class="row">
-    <div id="parent_1" class="one-half column">
+    <div id="parent_1" class="col-xs-6">
         <p>Parent 1 ID: {{personal_info.parent_1_id}}</p>
         <p>First name: {{personal_info.parent_1_first_name}}</p>
         <p>Last name: {{personal_info.parent_1_last_name}}</p>
@@ -68,7 +73,7 @@
         <p>Contact method: {{personal_info.parent_1_preferred_contact_method}}</p>
     </div>
 
-    <div id="parent_2" class="one-half column">
+    <div id="parent_2" class="col-xs-6">
         <p>Parent 2 ID: {{personal_info.parent_2_id}}</p>
         <p>First name: {{personal_info.parent_2_first_name}}</p>
         <p>Last name: {{personal_info.parent_2_last_name}}</p>
@@ -83,7 +88,8 @@
     <div class="daycare_preferences">
         <h4>Daycare preferences:</h4>
         <form name="daycare_selection_form" method="post" onsubmit="return redirect()">
-        <table id="daycare_table">
+        <table>
+            <thead>
             <tr>
                 <th>Daycare name</th>
                 <th>Group capacity</th>
@@ -91,7 +97,8 @@
                 <th>Address</th>
                 <th>Selection</th>
             </tr>
-
+            </thead>
+            <tbody>
             {{# each daycare_info }}
                 <tr>
                     <td>{{ this.daycare_name }}</td>
@@ -101,8 +108,9 @@
                     <td><input type="radio" name="daycare_prefrence" value={{ this._id }}></td>
                 </tr>
             {{/each}}
+            </tbody>
             </table>
-            <button name="submit_choice" type="submit" id="application_submit">Submit</button>
+            <button class="btn-default" name="submit_choice" type="submit" id="application_submit">Submit</button>
             <script>
                 function redirect() {
                     let choice = document.querySelector('input[name="daycare_prefrence"]:checked').value

@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const hbs = require('express-handlebars')
-const path = require('path');
+const path = require('path')
 
 // MongoDB Connection
 const mongo = require(path.join(__dirname, '/model/db.js'))
@@ -11,6 +11,7 @@ const bodyParser = require('body-parser')
 
 // Static files location declaration
 app.use(express.static(path.join(__dirname, 'public/css')))
+app.use(express.static(path.join(__dirname, 'public/images')))
 app.use(express.static(path.join(__dirname)))
 
 // Handlebars Express initialisation
