@@ -18,14 +18,8 @@
   "homepage": "https://github.com/HenkBourgonje/CityOfHelsinkiProject#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "bootstrap": "^4.0.0-beta.2",
-    "datatables.net": "^1.10.16",
-    "datatables.net-dt": "^1.10.16",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
-    "hel-bootstrap-3": "^1.0.0-beta.4",
-    "jquery": "^3.2.1",
-    "jsdom": "^11.3.0",
     "mongojs": "^2.4.1"
   }
 }

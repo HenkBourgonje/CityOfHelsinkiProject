@@ -20,3 +20,40 @@
 header {
     margin-bottom: 70px!important;
 }
+
+input[type="search"] {
+    border-width: 0 0 2px 0;
+    box-shadow: none;
+    height: 40px;
+    padding: 6px 0;
+    border-color: #0d0d0d;
+}
+
+select {
+    border-width: 2px;
+    border-color: #0d0d0d;
+    background-color: white;
+    border-radius: 0px!important;
+}
+
+a.paginate_button.current {
+    border-width: 2px!important;
+    border-color: #0d0d0d!important;
+    background-color: white!important;
+    /*background: none!important;*/
+    font-weight: bold;
+}
+
+a.paginate_button {
+    /*border-width: 2px!important;*/
+    /*border-color: #0d0d0d!important;*/
+    /*background-color: white!important;*/
+    background: none!important;
+    font-weight: bold;
+}
+
+/*a.paginate_button:hover {*/
+    /*border-width: 2px!important;*/
+    /*border-color: #0d0d0d!important;*/
+    /*color: yellow;*/
+/*}*/

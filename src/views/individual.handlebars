@@ -84,11 +84,11 @@
     </div>
 </div>
 
-<div class="row">
+<!--<div class="row">-->
     <div class="daycare_preferences">
         <h4>Daycare preferences:</h4>
         <form name="daycare_selection_form" method="post" onsubmit="return redirect()">
-        <table>
+        <table id="daycare_pref_table">
             <thead>
             <tr>
                 <th>Daycare name</th>
@@ -110,7 +110,17 @@
             {{/each}}
             </tbody>
             </table>
-            <button class="btn-default" name="submit_choice" type="submit" id="application_submit">Submit</button>
+            <script>
+                $(function(){
+                    $("#daycare_pref_table").dataTable( {
+                        paging: false,
+                        searching: false,
+                        info: false,
+                        ordering: false
+                    });
+                })
+            </script>
+            <button class="btn btn-default" name="submit_choice" type="submit" id="application_submit">Submit</button>
             <script>
                 function redirect() {
                     let choice = document.querySelector('input[name="daycare_prefrence"]:checked').value
@@ -122,4 +132,4 @@
             </script>
         </form>
     </div>
-</div>
+<!--</div>-->
