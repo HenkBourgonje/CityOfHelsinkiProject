@@ -1,4 +1,16 @@
-<h1>Applicant: {{personal_info.first_name}} {{personal_info.last_name}}</h1>
+<div class="row">
+    <div id="header_names" class="col-xs-6">
+        <h1>Applicant: {{personal_info.first_name}} {{personal_info.last_name}}</h1>
+    </div>
+    <div id="header_button" class="col-xs-6">
+        <button class="btn btn-default" id="application_edit" onclick="return redirectEdit()">Edit</button>
+    </div>
+    <script>
+        function redirectEdit() {
+        }
+    </script>
+</div>
+
 <div class="row">
     <div id="basic_info" class="col-xs-6">
         <h4>Basic info:</h4>
@@ -6,7 +18,7 @@
         <p>Last name: {{personal_info.last_name}}</p>
         <p>Age: {{personal_info.age}}</p>
         <p>Gender: {{personal_info.gender}}</p>
-        <p id="id_code">ID code: {{personal_info._id}}</p>
+        <p id="id_code">ID code: {{personal_info.id_code}}</p>
         <p>Daycare type: {{personal_info.daycare_type}}</p>
         <p id="address_applicant">Address: {{personal_info.address}}</p>
         <p>Date of birth: {{personal_info.date_of_birth}}</p>
@@ -20,43 +32,28 @@
 
     <div id="map_view" class="col-xs-6">
         <h4>Map view</h4>
-        <div id="map"></div>
         <script>
-            let personal_address = document.querySelector('div#basic_info').querySelector('#address_applicant')
-            let daycare_address = document.querySelector('table#daycare_table').querySelector('#address_daycare')
+            window.onload = function () {
+                convertToURL()
+            }
 
+            // Function to strip to full address to usable strings for the iframe URL
+            function convertToURL() {
+                // Full address with town etc
+                let addressToEncode = document.querySelector('div#basic_info').querySelector('#address_applicant').innerHTML.slice(9)
 
-            console.log('P' + personal_address)
-            console.log('D' + daycare_address)
+                // Street address stripped till the comma
+                let streetaddress = addressToEncode.substr(0, addressToEncode.indexOf(','))
 
-            function initMap() {
-                let location_of_applicant = {lat: 60.16985569999999, lng: 24.93837910000002}
-                let map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 12,
-                    center: location_of_applicant
-                })
+                let streetname = streetaddress.replace(/[0-9]/g, '')
 
+                // Number of the address
+                let streetnumber = streetaddress.replace(/\D/g, '');
 
-                let id = document.querySelector('div#basic_info').querySelector('#id_code').innerHTML.slice(-24)
-
-
-                let addresses = ['Leppävaara', 'Helsinki', 'Vantaa','Espoo']
-
-                for (let x = 0; x < addresses.length; x++) {
-                    $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
-                        let p = data.results[0].geometry.location
-                        let latlng = new google.maps.LatLng(p.lat, p.lng);
-                        new google.maps.Marker({
-                            position: latlng,
-                            map: map
-                        })
-                    })
-                }
+                document.getElementById('map_frame').src = 'https://palvelukartta.hel.fi/embed/address/helsinki/' + streetname + '/' + streetnumber + '?level=common'
             }
         </script>
-        <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiPjAwMY-xCvqPvETNWQXFJTZrl6wDPvs&callback=initMap">
-        </script>
+        <iframe id="map_frame" style="width: 100%; height: 500px"></iframe>
     </div>
 </div>
 
@@ -85,10 +82,10 @@
 </div>
 
 <!--<div class="row">-->
-    <div class="daycare_preferences">
-        <h4>Daycare preferences:</h4>
-        <form name="daycare_selection_form" method="post" onsubmit="return redirect()">
-        <table id="daycare_pref_table">
+<div class="daycare_preferences">
+    <h4>Daycare preferences:</h4>
+    <form name="daycare_selection_form" method="post" onsubmit="return redirect()">
+        <table class="stripe hover" id="daycare_pref_table">
             <thead>
             <tr>
                 <th>Daycare name</th>
@@ -109,27 +106,26 @@
                 </tr>
             {{/each}}
             </tbody>
-            </table>
-            <script>
-                $(function(){
-                    $("#daycare_pref_table").dataTable( {
-                        paging: false,
-                        searching: false,
-                        info: false,
-                        ordering: false
-                    });
-                })
-            </script>
-            <button class="btn btn-default" name="submit_choice" type="submit" id="application_submit">Submit</button>
-            <script>
-                function redirect() {
-                    let choice = document.querySelector('input[name="daycare_prefrence"]:checked').value
-                    let id = document.querySelector('div#basic_info').querySelector('#id_code').innerHTML.slice(-24)
-
-                    window.location.replace('/application_submit/'+ id + '/' + choice)
-                    return false
-                }
-            </script>
-        </form>
-    </div>
+        </table>
+        <script>
+            $(function () {
+                $("#daycare_pref_table").dataTable({
+                    paging: false,
+                    searching: false,
+                    info: false,
+                    ordering: false
+                });
+            })
+        </script>
+        <button class="btn btn-default" name="submit_choice" type="submit" id="application_submit">Submit</button>
+        <script>
+            function redirect() {
+                let choice = document.querySelector('input[name="daycare_prefrence"]:checked').value
+                let id = document.querySelector('div#basic_info').querySelector('#id_code').innerHTML.slice(-11)
+                window.location.replace('/application_submit/' + id)
+                return false
+            }
+        </script>
+    </form>
+</div>
 <!--</div>-->

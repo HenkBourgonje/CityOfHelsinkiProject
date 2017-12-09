@@ -12,6 +12,7 @@ const bodyParser = require('body-parser')
 // Static files location declaration
 app.use(express.static(path.join(__dirname, 'public/css')))
 app.use(express.static(path.join(__dirname, 'public/images')))
+app.use(express.static(path.join(__dirname, 'model')))
 app.use(express.static(path.join(__dirname)))
 
 // Handlebars Express initialisation
@@ -39,6 +40,7 @@ app.get('/', (req, res) => {
  */
 // Individual document retrieval route
 app.get('/individual/:id', (req, res) => {
+
     // Find all info by applicant ID
     functions.findById(req.params.id, function (document) {
 
@@ -64,8 +66,7 @@ app.get('/individual/:id', (req, res) => {
 /**
  * Route that gets called when a child is being submitted to a daycare
  */
-// TODO See what the steps are after the submission of the child. It has to be edited in the DB, but what more, email sent to parents?.....
-app.get('/application_submit/:child_id/:daycare_id', (req, res) => {
+app.get('/application_submit/:child_id', (req, res) => {
     functions.changeStatus(req.params.child_id, 'closed')
     res.redirect('/')
 })
@@ -81,4 +82,12 @@ app.post('/submit', (req, res) => {
 /**
  * Port initialisation
  */
-app.listen(3000, () => console.log('Running on port 3000...'))
+let server = app.listen(process.env.PORT || '8080', function () {
+    console.log('App listening on Port %s', server.address().port);
+    console.log('Press Ctrl+C to quit');
+});
+
+
+
+
+

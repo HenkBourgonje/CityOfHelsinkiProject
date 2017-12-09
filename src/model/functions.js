@@ -12,6 +12,7 @@ exports.getDataFromDB = function (callback) {
     db.people.find(function (err, results) {
         callback(results)
     })
+
 }
 
 /**
@@ -41,14 +42,13 @@ exports.getDaycares = function (id, callback) {
  * @param id ID of the child
  * @param status Status to which it should be changed.
  */
-exports.changeStatus = function(id, status) {
+exports.changeStatus = function (id, status) {
     db.people.findAndModify({
-        query: { '_id': mongojs.ObjectId(id) },
-        update: { $set: { 'status': status }},
+        query: {'id_code': id},
+        update: {$set: {'status': status}},
         new: true
     }, function (err, doc) {
         return
     })
 }
-
 
